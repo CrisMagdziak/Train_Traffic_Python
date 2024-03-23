@@ -19,3 +19,8 @@ def miss_dupl(dataframe) :
     print('\n')
     print('### Unique Values ###')
     print(dataframe.nunique().sum())
+
+def drop_treshold(dataframe) :
+    """ Return infrmation which column is in drop treshold of 5% missing values"""
+    tresh = int(len(dataframe) * 0.05)
+    return dataframe.columns[dataframe.isna().sum() <= tresh]
