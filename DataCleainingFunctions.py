@@ -14,7 +14,8 @@ def miss_dupl(dataframe) :
     """Return information about missing values and duplicates in dataset"""
     print('\n')
     print('### Missing Values ###')
-    print(dataframe.isna().sum())
+    ndf = dataframe.isna().sum()
+    print(ndf[ndf > 0])
     print('\n')
     print('### Duplicate Values ###')
     print(dataframe.duplicated().sum())
