@@ -39,3 +39,12 @@ def lower_tresh(col):
 def upper_tresh(col) :
     """ Calculate upper treshold """
     return np.quantile(col, 0.75) + 1.5 * dataset_IQR(col)
+
+def columns_bsize(dataframe) :
+    """ Return size of each column in bytes"""
+    return [f'{x} --- {dataframe[x].nbytes} --- {dataframe[x].dtype}' for x in dataframe]
+
+def change_to_int(dataframe, list) :
+    """ Change given columns type to int16"""
+    for x in list:
+        dataframe[x] = dataframe[x].astype('int16')
