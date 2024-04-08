@@ -50,18 +50,21 @@ def upper_tresh(col) :
     return np.quantile(col, 0.75) + (1.5 * dataset_IQR(col))
 
 def lower_treshholders(dataframe) :
+    """Check how many outliners-lower we have for each column"""
     for x in dataframe.select_dtypes(include= 'number') :
         print(f'Column: {x}')
         print(f'Lower treshold {lower_tresh(dataframe[x])}')
         print(f'Ilosc wartosci ponizej dolnego outlinera: {dataframe[x][dataframe[x] < lower_tresh(dataframe[x])].count()}\n')
 
 def upper_treshholders(dataframe) :
+    """Check how many outliners-upper we have for each column"""
     for x in dataframe.select_dtypes(include= 'number') :
         print(f'Column: {x}')
         print(f'Upper treshold {upper_tresh(dataframe[x])}')
         print(f'Ilosc wartosci powyzej górnego outlinera: {dataframe[x][dataframe[x] > upper_tresh(dataframe[x])].count()}\n')
 
 def remove_outliners(dataframe) :
+    """Remove outliners for column with number type"""
     for x in dataframe.select_dtypes(include= 'number') :
         dataframe = dataframe[(dataframe[x] >= lower_tresh(dataframe[x])) & (dataframe[x] <= upper_tresh(dataframe[x]))]
     return dataframe
