@@ -65,3 +65,9 @@ def remove_outliners(dataframe) :
     for x in dataframe.select_dtypes(include= 'number') :
         dataframe = dataframe[(dataframe[x] >= lower_tresh(dataframe[x])) & (dataframe[x] <= upper_tresh(dataframe[x]))]
     return dataframe
+
+def weight_average(group, col) :
+    """Return weight mean"""
+    d = group[col]
+    w = group['Circulations']
+    return (d * w).sum() / w.sum()
