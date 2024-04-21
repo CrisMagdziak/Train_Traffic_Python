@@ -1,7 +1,12 @@
 import numpy as np
 
 def stats(dataframe) :
-    """Returns informations about dataset - shape and data types"""
+    """Function shows informations about dataset - shape and data types.
+    
+    Args:
+        Function takes pandas dataframe.
+    
+    """
     print('### Shape ###')
     print(f'Rows: {dataframe.shape[0]}')
     print(f'Columns: {dataframe.shape[1]}')
@@ -11,7 +16,12 @@ def stats(dataframe) :
     print('\n')
 
 def miss_dupl(dataframe) :
-    """Return information about missing values and duplicates in dataset"""
+    """Function shows information about missing values and duplicates in dataset.
+
+    Args:
+        Function takes pandas dataframe.
+
+    """
     print('\n')
     print('### Missing Values ###')
     ndf = dataframe.isna().sum()
@@ -24,16 +34,38 @@ def miss_dupl(dataframe) :
     print(dataframe.nunique().sum())
 
 def columns_bsize(dataframe) :
-    """ Return size of each column in bytes"""
+    """ Function shows size of each column in bytes.
+    
+    Args:
+        Function takes pandas dataframe.
+
+    Return:
+        Function returns ...
+    
+    """
     return [f'{x} --- {dataframe[x].nbytes} --- {dataframe[x].dtype}' for x in dataframe]
 
 def change_to_int(dataframe, list) :
-    """ Change given columns type to int16"""
+    """ Change given columns type to int16.
+    
+    Args:
+        dataframe -> pandas dataframe;
+        list -> list of columns that type is changed to int16.
+
+    """
     for x in list:
         dataframe[x] = dataframe[x].astype('int16')
 
 def drop_missing_five(dataframe) :
-    """ Return infrmation which column is in drop treshold of 5% missing values"""
+    """ Function that shows which column is in drop treshold of 5% missing values.
+    
+    Args:
+        Function takes pandas dataframe.
+
+    Return:
+        Value returned as ... of columns below 5% missing values.
+    
+    """
     tresh = int(len(dataframe) * 0.05)
     return dataframe.columns[dataframe.isna().sum() <= tresh]
 
