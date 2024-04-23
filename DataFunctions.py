@@ -165,6 +165,10 @@ def barplot(data, x, y, title, col = None, col_wrap = None, hue = None) :
         x -> x axis data
         y -> y axis data
         title -> title of chart
+        *
+        col = None -> data from specific column, 
+        col_wrap = None -> how many charts should be in 1 column, 
+        hue = None -> data show as color 
     """
     bar = sns.catplot(data= data, x = x, y = y, kind = 'bar', height= 8.27, aspect= 11.7/8.27, col = col, col_wrap = col_wrap, hue = hue)
     bar.figure.subplots_adjust(top= 0.9)
