@@ -1,5 +1,6 @@
 import numpy as np
 import seaborn as sns
+import matplotlib.pyplot as plt
 
 def stats(dataframe) :
     """Function shows informations about dataset - shape and data types.
@@ -156,7 +157,7 @@ def weight_average(group, col) :
     w = group['Circulations']
     return (d * w).sum() / w.sum()
 
-def barplot(data, x, y, title) :
+def barplot(data, x, y, title, col = None, col_wrap = None, hue = None) :
     """ Create bar plot
 
     Args:
@@ -165,7 +166,7 @@ def barplot(data, x, y, title) :
         y -> y axis data
         title -> title of chart
     """
-    bar = sns.catplot(data= data, x = x, y = y, kind = 'bar', height= 8.27, aspect= 11.7/8.27)
+    bar = sns.catplot(data= data, x = x, y = y, kind = 'bar', height= 8.27, aspect= 11.7/8.27, col = col, col_wrap = col_wrap, hue = hue)
     bar.figure.subplots_adjust(top= 0.9)
     bar.figure.suptitle(title)
     bar.set_xlabels('')
