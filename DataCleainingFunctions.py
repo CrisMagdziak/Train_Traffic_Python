@@ -64,7 +64,7 @@ def drop_missing_five(dataframe) :
         dataframe -> dataframe from where we load data
 
     Return:
-        Value returned as ... of columns below 5% missing values.
+        list of columns below 5% missing values.
     
     """
     tresh = int(len(dataframe) * 0.05)
@@ -77,41 +77,81 @@ def dataset_IQR(col) :
         col -> column for IQR calculation
 
     Return:
-        Value returned as ... of columns below 5% missing values.
+        IQR value of specific column, value -> float
     
     """
     return np.quantile(col, 0.75) - np.quantile(col, 0.25)
 
 def lower_tresh(col):
-   """ Calculate lower treshold """ 
-   return np.quantile(col, 0.25) - (1.5 * dataset_IQR(col))
+    """ Calculate lower treshold
+
+    Args:
+        col -> column for IQR calculation
+
+    Return:
+        lower outliner value -> float
+    """ 
+    return np.quantile(col, 0.25) - (1.5 * dataset_IQR(col))
 
 def upper_tresh(col) :
-    """ Calculate upper treshold """
+    """ Calculate upper treshold
+
+    Args:
+        col -> column for IQR calculation
+
+    Return:
+        upper outliner value -> float
+    """ 
     return np.quantile(col, 0.75) + (1.5 * dataset_IQR(col))
 
 def lower_treshholders(dataframe) :
-    """Check how many outliners-lower we have for each column"""
+    """ Check how many outliners-lower we have for each column
+    
+    Args:
+        dataframe -> dataframe from where we load data
+    
+    """
     for x in dataframe.select_dtypes(include= 'number') :
         print(f'Column: {x}')
         print(f'Lower treshold {lower_tresh(dataframe[x])}')
         print(f'Ilosc wartosci ponizej dolnego outlinera: {dataframe[x][dataframe[x] < lower_tresh(dataframe[x])].count()}\n')
 
 def upper_treshholders(dataframe) :
-    """Check how many outliners-upper we have for each column"""
+    """ Check how many outliners-upper we have for each column
+    
+    Args:
+        dataframe -> dataframe from where we load data
+    
+    """
     for x in dataframe.select_dtypes(include= 'number') :
         print(f'Column: {x}')
         print(f'Upper treshold {upper_tresh(dataframe[x])}')
         print(f'Ilosc wartosci powyzej górnego outlinera: {dataframe[x][dataframe[x] > upper_tresh(dataframe[x])].count()}\n')
 
 def remove_outliners(dataframe) :
-    """Remove outliners for column with number type"""
+    """ Remove outliners for column with number type
+    
+    Args:
+        dataframe -> dataframe from where we load data
+
+    Return:
+        new dataframe, value -> DataFrame 
+    
+    """
     for x in dataframe.select_dtypes(include= 'number') :
         dataframe = dataframe[(dataframe[x] >= lower_tresh(dataframe[x])) & (dataframe[x] <= upper_tresh(dataframe[x]))]
     return dataframe
 
 def weight_average(group, col) :
-    """Return weight mean"""
+    """ Return weight mean
+    
+    Args:
+        group -> grouped dataframe
+        col -> dataset column
+
+    Return:
+        list with weight value
+    """
     d = group[col]
     w = group['Circulations']
     return (d * w).sum() / w.sum()
