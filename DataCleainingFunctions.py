@@ -1,10 +1,11 @@
 import numpy as np
+import seaborn as sns
 
 def stats(dataframe) :
     """Function shows informations about dataset - shape and data types.
     
     Args:
-        Function takes pandas dataframe.
+        dataframe -> dataframe from where we load data
     
     """
     print('### Shape ###')
@@ -19,7 +20,7 @@ def miss_dupl(dataframe) :
     """Function shows information about missing values and duplicates in dataset.
 
     Args:
-        Function takes pandas dataframe.
+        dataframe -> dataframe from where we load data
 
     """
     print('\n')
@@ -37,10 +38,10 @@ def columns_bsize(dataframe) :
     """ Function shows size of each column in bytes.
     
     Args:
-        Function takes pandas dataframe.
+        dataframe -> dataframe from where we load data
 
     Return:
-        Function returns ...
+        Function returns list of column names and size in byte
     
     """
     return [f'{x} --- {dataframe[x].nbytes} --- {dataframe[x].dtype}' for x in dataframe]
@@ -49,7 +50,7 @@ def change_to_int(dataframe, list) :
     """ Change given columns type to int16.
     
     Args:
-        dataframe -> pandas dataframe;
+        dataframe -> dataframe from where we load data
         list -> list of columns that type is changed to int16.
 
     """
@@ -60,7 +61,7 @@ def drop_missing_five(dataframe) :
     """ Function that shows which column is in drop treshold of 5% missing values.
     
     Args:
-        Function takes pandas dataframe.
+        dataframe -> dataframe from where we load data
 
     Return:
         Value returned as ... of columns below 5% missing values.
@@ -70,7 +71,15 @@ def drop_missing_five(dataframe) :
     return dataframe.columns[dataframe.isna().sum() <= tresh]
 
 def dataset_IQR(col) :
-    """ Calculate IQR for given column """
+    """ Calculate IQR for given column
+     
+    Args:
+        col -> column for IQR calculation
+
+    Return:
+        Value returned as ... of columns below 5% missing values.
+    
+    """
     return np.quantile(col, 0.75) - np.quantile(col, 0.25)
 
 def lower_tresh(col):
@@ -106,3 +115,19 @@ def weight_average(group, col) :
     d = group[col]
     w = group['Circulations']
     return (d * w).sum() / w.sum()
+
+def barplot(data, x, y, title) :
+    """ Create bar plot
+
+    Args:
+        data -> dataframe from where we load data
+        x -> x axis data
+        y -> y axis data
+        title -> title of chart
+    """
+    bar = sns.catplot(data= data, x = x, y = y, kind = 'bar', height= 8.27, aspect= 11.7/8.27)
+    bar.figure.subplots_adjust(top= 0.9)
+    bar.figure.suptitle(title)
+    bar.set_xlabels('')
+    plt.xticks(rotation = 60)
+    pass
